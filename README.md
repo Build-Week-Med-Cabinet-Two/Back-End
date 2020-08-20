@@ -13,7 +13,16 @@
 
 ## API
 
-BASE URL: **_heroku url_**
+BASE URL: https://medcabinet2.herokuapp.com/
+
+test account:
+```json
+{
+  "username": "user1",
+  "password": "password",
+  "email": "user1@email.com"
+}
+```
 
 #### Table of Contents
 
@@ -21,11 +30,17 @@ BASE URL: **_heroku url_**
 | ---- | ----------------------- | ---------------------- |
 | POST | `/auth/register`        | register a new user    |
 | POST | `/auth/login`           | login an existing user |
-| PUT  | `/auth/change-password` | change password        |
+| PUT* | `/auth/change-password` | change password        |
+| GET* | `/users`                | list array of users    |
+| GET* | `/users/:id`            | list info for user     |
 
-\*\*Temporary endpoints for testing login
-| GET | `/users` | list array of users MUST BE LOGGED IN |
-| GET | `/users/:id` | list info for user MUST BE LOGGED IN |
+*(include auth token in headers)
+
+```json
+{
+  "headers": { "authorization": "bearer really.long.token" }
+}
+```
 
 ## Examples
 
@@ -75,14 +90,7 @@ response data:
 ```
 
 #### PUT /auth/change-password
-
-(include auth token in headers)
 request data:
-```json
-{
-  "headers": { "authorization": "bearer really.long.token" }
-}
-```
 
 ```json
 {
