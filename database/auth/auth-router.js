@@ -28,7 +28,7 @@ router.post("/register", (req, res) => {
     Users.add(credentials)
       .then((user) => {
         const token = generateToken(user);
-        res.status(201).json({ data: user, token });
+        res.status(201).json({ message: "Registration successful", data: {username: user.username, email: user.email}, token });
       })
       .catch((error) => {
         res.status(500).json({ message: error.message });
@@ -44,7 +44,7 @@ router.post("/register", (req, res) => {
 router.put('/change-password', authenticate,(req, res) => {
 
   const changes = req.body;
-  const { subject } = req.decodedJwt;
+  const { subject, username } = req.decodedJwt;
   console.log(req.decodedJwt)
   if (isValidPassword(changes)) {
     const rounds = process.env.BCRYPT_ROUNDS;
@@ -55,7 +55,7 @@ router.put('/change-password', authenticate,(req, res) => {
         if (user) {
           Users.update(changes, subject)
           .then(updatedUser => {
-            res.json(updatedUser);
+            res.json({message: `Password changed for ${username}`});
           });
         } else {
           res.status(404).json({ message: 'Could not find user with given id' });

@@ -38,7 +38,7 @@ function findById(id) {
   return db("users").where({ id }).first();
 }
 function getUsers(id) {
-  let query = db("users").select("id", "username", "email", "password");
+  let query = db("users").select("id", "username", "email");
 
   if (id) {
     return query
