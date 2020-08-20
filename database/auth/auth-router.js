@@ -57,8 +57,8 @@ router.delete('/delete-user', authenticate,(req, res) => {
 });
 
 router.put('/change-password', authenticate,(req, res) => {
-
-  const changes = req.body;
+  //extract password from body so it is the only thing the user can change
+  const changes = { password: req.body.password };
   const { subject, username } = req.decodedJwt;
   if (isValidPassword(changes)) {
     const rounds = process.env.BCRYPT_ROUNDS;
@@ -81,7 +81,7 @@ router.put('/change-password', authenticate,(req, res) => {
     }else {
       res.status(400).json({
         message:
-          "please provide username and password and the password shoud be alphanumeric",
+          "please provide a new password and the password shoud be alphanumeric",
       });
     }
 });
