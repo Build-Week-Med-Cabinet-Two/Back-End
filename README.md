@@ -86,7 +86,7 @@ response data:
 
 ```json
 {
-  "message": "Welcome to our API Name",
+  "message": "Welcome to med-cabinet ${user}",
   "token": "really.long.token"
 }
 ```

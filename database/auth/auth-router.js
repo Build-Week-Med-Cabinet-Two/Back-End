@@ -101,7 +101,7 @@ router.post("/login", (req, res) => {
         if (user && bcryptjs.compareSync(password, user.password)) {
           const token = generateToken(user);
           res.status(200).json({
-            message: `Welcome to our API ${username}`,
+            message: `Welcome to med-cabinet ${username}`,
             token,
           });
         } else {
