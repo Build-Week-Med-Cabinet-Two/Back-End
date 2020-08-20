@@ -6,7 +6,6 @@ const authenticate = require('../database/middleware/restricted');
 
 const usersRouter = require('../database/users/users-router')
 const authRouter = require('../database/auth/auth-router');
-const checkRole = require('../database/middleware/check-usertype');
 
 const server = express();
 
@@ -14,10 +13,10 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
-server.use("/api/", authRouter);
-server.use("/api/users", authRouter, usersRouter);
+server.use("/auth", authRouter);
+server.use("/users", authenticate, usersRouter);
 
-server.get("/", checkRole(1), (req, res) => {
+server.get("/", (req, res) => {
     res.status(200).json({ api: "up and ATOM" });
   });
   

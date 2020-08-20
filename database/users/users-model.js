@@ -29,11 +29,11 @@ function findById(id) {
   return db("users").where({ id }).first();
 }
 function getUsers(id) {
-  let query = db("users as u").join("usertypes as t", "u.usertype", "t.id").select("u.id", "u.username", "t.name as usertype");
+  let query = db("users").select("id", "username", "email");
 
   if (id) {
     return query
-      .where("u.id", id)
+      .where("id", id)
       .first()
       .then((user) => {
         if (user) {
