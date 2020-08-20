@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
           res.status(401).json({ you: "can't touch this" });
         } else {
           req.decodedJwt = decodedToken;
-            console.log(req.decodedJwt);
+          //  console.log(req.decodedJwt);
           next();
         }
       });

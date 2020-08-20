@@ -2,12 +2,18 @@ const bcryptjs = require("bcryptjs");
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const secrets = require('../config/secrets');
+const authenticate = require('../middleware/restricted');
 
 const Users = require("../users/users-model.js");
 
 function isValid(user) {
   return Boolean(
     user.username && user.password && typeof user.password === "string"
+  );
+}
+function isValidPassword(user) {
+  return Boolean(
+    user.password && typeof user.password === "string"
   );
 }
 
@@ -35,6 +41,38 @@ router.post("/register", (req, res) => {
   }
 });
 
+router.put('/change-password', authenticate,(req, res) => {
+
+  const changes = req.body;
+  const { subject } = req.decodedJwt;
+  console.log(req.decodedJwt)
+  if (isValidPassword(changes)) {
+    const rounds = process.env.BCRYPT_ROUNDS;
+    const hash = bcryptjs.hashSync(changes.password, rounds);
+    changes.password = hash;
+      Users.getUsers(subject)
+      .then(user => {
+        if (user) {
+          Users.update(changes, subject)
+          .then(updatedUser => {
+            res.json(updatedUser);
+          });
+        } else {
+          res.status(404).json({ message: 'Could not find user with given id' });
+        }
+      })
+      .catch (err => {
+        res.status(500).json({ message: 'Failed to update user' });
+      });
+    }else {
+      res.status(400).json({
+        message:
+          "please provide username and password and the password shoud be alphanumeric",
+      });
+    }
+});
+
+
 //----------------------------------------------------------------------------//
 // When someone successfully authenticates, reward them with a token, so they
 // don't have to authenticate again.
@@ -49,7 +87,7 @@ router.post("/login", (req, res) => {
         if (user && bcryptjs.compareSync(password, user.password)) {
           const token = generateToken(user);
           res.status(200).json({
-            message: "Welcome to our API",
+            message: `Welcome to our API ${username}`,
             token,
           });
         } else {

@@ -2,7 +2,9 @@ const db = require("../dbConfig");
 
 module.exports = {
   add,
+  findBy,
   getUsers,
+  update,
   remove,
 };
 function userToBody(user) {
@@ -21,6 +23,13 @@ async function add(user) {
     throw error;
   }
 }
+function findBy(filter) {
+  return db("users").where(filter).orderBy("id");
+}
+function update(changes, id) {
+  return db('users').where({ id }).update(changes);
+}
+
 function remove(id) {
   return db("users").where({ id }).delete();
 }
@@ -29,7 +38,7 @@ function findById(id) {
   return db("users").where({ id }).first();
 }
 function getUsers(id) {
-  let query = db("users").select("id", "username", "email");
+  let query = db("users").select("id", "username", "email", "password");
 
   if (id) {
     return query
@@ -48,3 +57,4 @@ function getUsers(id) {
     });
   }
 }
+

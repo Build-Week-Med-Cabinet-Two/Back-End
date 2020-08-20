@@ -20,7 +20,8 @@ BASE URL: ***heroku url***
 | Type   | Path                                 | Notes                                       |
 | ------ | ------------------------------------ | ------------------------------------------- |
 | POST   | `/auth/register`                     | register a new user                         |
-| POST   | `/auth/login`                        | login an existing user                      |
+| POST   | `/auth/login`                        | login an existing user                      |`/
+| PUT    | `/auth/change-password`              | change password
 **Temporary endpoints will be removed
 | GET    | `/users`                             | list array of users MUST BE LOGGED IN       |
 | GET    | `/users/:id`                         | list info for user MUST BE LOGGED IN        |
