@@ -1,0 +1,39 @@
+{
+  "name": "foodtruck-trackr-2",
+  "version": "1.0.0",
+  "description": "FoodTruck Trackr Backend",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js",
+    "start": "node index.js",
+    "test": "cross-env DB_ENV=testing jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elijah-atkins/BackEnd.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elijah-atkins/BackEnd/issues"
+  },
+  "homepage": "https://github.com/elijah-atkins/BackEnd#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.4",
+    "knex-cleaner": "^1.3.0",
+    "pg": "^8.3.0",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "jest": "^26.4.0",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
+  }
+}
