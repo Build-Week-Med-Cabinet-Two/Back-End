@@ -41,11 +41,25 @@ router.post("/register", (req, res) => {
   }
 });
 
-router.put('/change-password', authenticate,(req, res) => {
-
-  const changes = req.body;
+router.delete('/delete-user', authenticate,(req, res) => {
   const { subject, username } = req.decodedJwt;
-  console.log(req.decodedJwt)
+  Users.remove(subject)
+  .then(deleted => {
+    if (deleted) {
+      res.json({ message: `${username} Deleted`, removed: "User Profile Permanently Deleted" });
+    } else {
+      res.status(404).json({ message: 'Could not find user with given id' });
+    }
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to delete user' });
+  });
+});
+
+router.put('/change-password', authenticate,(req, res) => {
+  //extract password from body so it is the only thing the user can change
+  const changes = { password: req.body.password };
+  const { subject, username } = req.decodedJwt;
   if (isValidPassword(changes)) {
     const rounds = process.env.BCRYPT_ROUNDS;
     const hash = bcryptjs.hashSync(changes.password, rounds);
@@ -54,8 +68,8 @@ router.put('/change-password', authenticate,(req, res) => {
       .then(user => {
         if (user) {
           Users.update(changes, subject)
-          .then(updatedUser => {
-            res.json({message: `Password changed for ${username}`});
+          .then(() => {
+            res.json({message: `Password changed for ${username}`  });
           });
         } else {
           res.status(404).json({ message: 'Could not find user with given id' });
@@ -67,7 +81,7 @@ router.put('/change-password', authenticate,(req, res) => {
     }else {
       res.status(400).json({
         message:
-          "please provide username and password and the password shoud be alphanumeric",
+          "please provide a new password and the password shoud be alphanumeric",
       });
     }
 });
@@ -87,7 +101,7 @@ router.post("/login", (req, res) => {
         if (user && bcryptjs.compareSync(password, user.password)) {
           const token = generateToken(user);
           res.status(200).json({
-            message: `Welcome to our API ${username}`,
+            message: `Welcome to med-cabinet ${username}`,
             token,
           });
         } else {
@@ -109,11 +123,10 @@ function generateToken(user) {
   const payload = {
     subject: user.id,
     username: user.username,
-    usertype: user.usertype,
   };
 
   const options = {
-    expiresIn: "2h",
+    expiresIn: "1d",
   };
 
   return jwt.sign(payload, secrets.jwtSecret, options);

@@ -16,6 +16,7 @@
 BASE URL: https://medcabinet2.herokuapp.com/
 
 test account:
+
 ```json
 {
   "username": "user1",
@@ -26,15 +27,16 @@ test account:
 
 #### Table of Contents
 
-| Type | Path                    | Notes                  |
-| ---- | ----------------------- | ---------------------- |
-| POST | `/auth/register`        | register a new user    |
-| POST | `/auth/login`           | login an existing user |
-| PUT* | `/auth/change-password` | change password        |
-| GET* | `/users`                | list array of users    |
-| GET* | `/users/:id`            | list info for user     |
+| Type     | Path                    | Notes                  |
+| -------- | ----------------------- | ---------------------- |
+| POST     | `/auth/register`        | register a new user    |
+| POST     | `/auth/login`           | login an existing user |
+| DELETE\* | `/auth/delete-user`     | remove user - NO UNDO  |
+| PUT\*    | `/auth/change-password` | change password        |
+| GET\*    | `/users`                | list array of users    |
+| GET\*    | `/users/:id`            | list info for user     |
 
-*(include auth token in headers)
+\*(include auth token in headers)
 
 ```json
 {
@@ -84,12 +86,24 @@ response data:
 
 ```json
 {
-  "message": "Welcome to our API Name",
+  "message": "Welcome to med-cabinet ${user}",
   "token": "really.long.token"
 }
 ```
 
+### DELETE /auth/delete-user
+
+response data:
+
+```json
+{
+  "message": "${user} Deleted",
+  "removed": "User Profile Permanently Deleted"
+}
+```
+
 #### PUT /auth/change-password
+
 request data:
 
 ```json
@@ -105,3 +119,4 @@ response data:
   "message": "Password changed for ${user}"
 }
 ```
+
