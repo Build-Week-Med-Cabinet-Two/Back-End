@@ -1,4 +1,5 @@
 const db = require("../dbConfig");
+const { where } = require("../dbConfig");
 
 module.exports = {
   add,
@@ -12,7 +13,8 @@ module.exports = {
   getList,
   getLists,
   deleteList,
-  getEffectOrFlavorIds,
+  getEffects,
+  getFlavors,
 };
 
 function userToBody(user) {
@@ -38,65 +40,45 @@ function updateLists(payload, type) {
       list_id: payload.list_ID,
     });
   } else {
-    return "you messed up. pass a 'type' argument as either 'effect', description, or 'flavor' please";
+    return "pass a 'type' argument as either 'effect', description, or 'flavor' please";
   }
 }
 
-function addList(listName, user_id) {
-  return db("lists").insert({ user_id, listName });
-}
-function getList(user_id, type, listName) {
-  if (type === "effects") {
-    return db("list_effects as le")
-      .leftJoin("lists as l", "le.list_id", "l.id")
-      .join("effects as e", "e.id", "le.effect_id")
-      .where({ user_id: user_id, listName: listName })
-      .select("l.listName", "e.effect");
-  } else if (type === "flavors") {
-    return db("list_flavors as lf")
-      .leftJoin("lists as l", "lf.list_id", "l.id")
-      .join("flavors as f", "f.id", "lf.flavor_id")
-      .where({ user_id: user_id, listName: listName })
-      .select("l.listName", "f.flavor");
-  } else if (type === "list_descriptions") {
-    return db("list_descriptions as ld")
-      .leftJoin("lists as l", "ld.list_id", "l.id")
-      .where({ user_id: user_id, listName: listName })
-      .select("l.listName", "ld.userDescription");
-  }
+function addList(user_id) {
+
 }
 
-function getLists(user_id, type) {
-  if (type === "effects") {
-    return db("list_effects as le")
-      .leftJoin("lists as l", "le.list_id", "l.id")
-      .join("effects as e", "e.id", "le.effect_id")
-      .where({ user_id: user_id })
-      .select("l.listName", "e.effect");
-  } else if (type === "flavors") {
-    return db("list_flavors as lf")
-      .leftJoin("lists as l", "lf.list_id", "l.id")
-      .join("flavors as f", "f.id", "lf.flavor_id")
-      .where({ user_id: user_id })
-      .select("l.listName", "f.flavor");
-  } else if (type === "list_descriptions") {
-    return db("list_descriptions as ld")
-      .leftJoin("lists as l", "ld.list_id", "l.id")
-      .where({ user_id: user_id })
-      .select("l.listName", "ld.userDescription");
-  }
+function getLists(id) {
+  return db("lists").where({user_id: id})
+}
+function getList(id) {
+  return db("lists").where({id: id})
 }
 function deleteList(listName, userId) {
   return db("lists").where({ listName: listName, user_id: userId }).del();
 }
-function getEffectOrFlavorIds(type) {
-  if (type === "effect") {
-    return db("effects");
-  }
-  if (type === "flavor") {
-    return db("flavors");
-  }
+
+async function getEffects(listID) {
+ try{
+     const effects = db("list_effects as le")
+    .join("effects as e", "e.id", "le.effect_id")
+    .where({list_id: listID}).select("effect")
+    return effects
+} catch(error){
+  throw error;
 }
+}
+
+async function getFlavors(listID) {
+  try{
+    const flavors = db("list_flavors as le")
+    .join("flavors as e", "e.id", "le.flavor_id")
+    .where({list_id: listID}).select("flavor");
+     return flavors;
+ } catch(error){
+   throw error;
+ }
+ }
 async function add(user) {
   try {
     const [id] = await db("users").insert(user, "id");
