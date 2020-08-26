@@ -8,7 +8,9 @@ module.exports = (req, res, next) => {
     if (token) {
       jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
         if (err) {
-          res.status(401).json({ you: "can't touch this" });
+          res.status(401).json({ message: "you can't touch this",
+          hint:
+          "add 'bearer ' (include the space) in the string preceding your token query (i.e. 'bearer eyJhbGciOiJIUzI...')", });
         } else {
           req.decodedJwt = decodedToken;
           //  console.log(req.decodedJwt);
