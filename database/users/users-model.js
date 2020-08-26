@@ -1,5 +1,4 @@
 const db = require("../dbConfig");
-const { where } = require("../dbConfig");
 
 module.exports = {
   add,
@@ -15,7 +14,17 @@ module.exports = {
   deleteList,
   getEffects,
   getFlavors,
+  getEffectOrFlavorIds,
+  updatePrefs
 };
+function getEffectOrFlavorIds(type) {
+  if (type === "effect") {
+    return db("effects");
+  }
+  if (type === "flavor") {
+    return db("flavors");
+  }
+}
 
 function userToBody(user) {
   const result = {
@@ -28,28 +37,30 @@ function getListId(listName, id) {
   return db("lists").where({ listName: listName, user_id: id }).select("id");
 }
 function updateLists(payload, type) {
-  console.log(payload);
+  //console.log(payload);
   if (type === "effect") {
     return db("list_effects").insert(payload);
   } else if (type === "flavor") {
     return db("list_flavors").insert(payload);
-  } else if (type === "description") {
-    return db("lists").insert({
-      listName: payload.listName,
-      userDescription: payload.description,
-      list_id: payload.list_ID,
-    });
   } else {
     return "pass a 'type' argument as either 'effect', description, or 'flavor' please";
   }
 }
-
-function addList(user_id) {
-
+function updatePrefs(payload, type) {
+  if (type === "effect") {
+    return db("list_effects").insert(payload);
+  } else if (type === "flavor") {
+    return db("list_flavors").insert(payload);
+  } else {
+    return "you messed up. pass a 'type' argument as either 'effect', description, or 'flavor' please";
+  }
+}
+function addList(listName, user_id, userDescription) {
+  return db("lists").insert({ user_id, listName, userDescription});
 }
 
 function getLists(id) {
-  return db("lists").where({user_id: id})
+  return db("lists").where({user_id: id}).select("id", "listName as list_name", "userDescription as user_description")
 }
 function getList(id) {
   return db("lists").where({id: id})
