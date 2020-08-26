@@ -3,8 +3,8 @@ exports.up = function (knex) {
     tbl.increments();
     tbl.string("username", 256).notNullable().unique().index();
     tbl.string("email", 256).notNullable();
-    tbl.integer("zip");
-    tbl.date("birthday");
+    tbl.integer("zipcode");
+    tbl.date("birthDate");
     tbl.string("password", 256).notNullable();
   })
 
@@ -26,6 +26,7 @@ exports.up = function (knex) {
       .references("users.id")
       .onDelete("cascade");
     tbl.string("listName", 256);
+    tbl.string("userDescription", 128).notNullable().index();
   })
   .createTable("list_effects", (tbl) => {
     tbl
@@ -55,33 +56,10 @@ exports.up = function (knex) {
       .references("flavors.id");
     tbl.primary(["list_id", "flavor_id"]); //forces the primary key so that there can't be id mismatches
   })
-  .createTable("list_descriptions", (tbl) => {
-    tbl
-      .integer("list_id")
-      .notNullable()
-      .unsigned()
-      .references("lists.id")
-      .onDelete("cascade");
-    tbl.string("userDescription", 128).notNullable().index();
-
-    tbl.primary(["list_id", "userDescription"]); //forces the primary key so that there can't be id mismatches
-  })
-
-  .createTable("savedRecommendations", (tbl) => {
-    tbl.increments();
-    tbl
-      .integer("user_id")
-      .notNullable()
-      .unsigned()
-      .references("users.id")
-      .onDelete("cascade");
-    tbl.string("strain", 128).notNullable();
-  });
 }
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfExists("savedRecommendations")
     .dropTableIfExists("list_descriptions")
     .dropTableIfExists("list_flavors")
     .dropTableIfExists("list_effects")
