@@ -318,12 +318,12 @@ request data:
 ```json
 {
   "listName": "Sleepy",
+  "flavors": ["Earthy", "Coffee"],
+  "effects": ["Happy", "Relaxed"],
   "issues": "optional user inputed issue(s)",
   "strain": "optional user inputed strain(s)",
-  "type": "optional user inputed type(s)"
+  "type": "optional user inputed type(s)",
   "intake": "optional user inputed intake(s)"
-  "flavors": ["Earthy", "Coffee"],
-  "effects": ["Happy", "Relaxed"]
 }
 ```
 
@@ -374,7 +374,7 @@ request data:
   "effects": ["Happy", "Uplifted"],
    "issues": "optional user inputed issue(s)",
   "strain": "optional user inputed strain(s)",
-  "type": "optional user inputed type(s)"
+  "type": "optional user inputed type(s)",
   "intake": "optional user inputed intake(s)"
 }
 ```
