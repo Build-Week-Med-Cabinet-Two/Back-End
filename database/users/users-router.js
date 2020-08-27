@@ -9,7 +9,7 @@ async function getRecs(prefs) {
   try {
     const formData = new FormData();
 
-    formData.append("Intakes/Types", prefs);
+    formData.append("Flavors/Effects", prefs);
 
     const recResponse = await axios.post(
       //TODO hook up with medcabinet 2 app
@@ -178,9 +178,11 @@ router.get("/list/:listName", restricted, async (req, res) => {
   const list = req.params.listName;
   const id = await Users.getListId(list, req.decodedJwt.subject);
   const payload = await getListObject(id[0].id);
-  console.log(payload)
-//  let searchValue = Object.values(payload).flat().join(" ");
-  getRecs(payload)
+  const PayValues = Object.values(payload)
+  const searchString = [].concat.apply([], PayValues).join(" ");
+  console.log(searchString)
+ // let searchValue = Object.values(payload).flat().join(" ");
+  getRecs(searchString)
     .then((results) => {
       res.status(200).json({ results: results });
     })
