@@ -326,7 +326,7 @@ request data:
 response data:
 
 ```json
-{
+[
   {
   "message": " user just CREATED list: Sleepy",
   "results": [
@@ -355,7 +355,7 @@ response data:
             "Type": "hybrid"
         }
     ]
-}
+]
 ```
 
 #### PUT /users/update-list
