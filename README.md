@@ -33,8 +33,9 @@ test account:
 | POST     | `/auth/login`           | login an existing user |
 | DELETE\* | `/auth/delete-user`     | remove user - NO UNDO  |
 | PUT\*    | `/auth/change-password` | change password        |
-| GET\*    | `/users`                | list array of users    |
-| GET\*    | `/users/:id`            | list info for user     |
+| GET\*    | `/users/lists`          | array of user lists    |
+| POST\*   | `/users/add-list`       | create new list        |
+| DELETE\* | `/users/delete-list`    | delete list            |
 
 \*(include auth token in headers)
 
@@ -120,3 +121,74 @@ response data:
 }
 ```
 
+#### GET /users/lists
+
+(include auth token in headers)
+request data:
+
+```json
+{
+  "headers": { "authorization": "bearer really.long.token" }
+}
+```
+
+response data:
+
+```json
+[
+  {
+    "listName": "Couch Lock",
+    "userDescription": "Something to wind down"
+  },
+  {
+    "listName": "Creative",
+    "userDescription": "Get creative juices flowing"
+  }
+]
+```
+
+#### POST users/add-list
+
+request data:
+
+```json
+{
+  "listName": "Sleepy",
+  "flavors": ["Earthy", "Coffee"],
+  "effects": ["Happy", "Relaxed"],
+  "description": "Optional user-provided description"
+}
+```
+
+response data:
+
+```json
+{
+    //TODO ADD RESPONSE
+}
+```
+
+
+#### PUT /profile/update-list
+
+(include auth token in headers)
+request data:
+
+```json
+{
+  "oldListName": "Sleepy",
+  "listName": "SleepyOne",
+  "flavors": ["Apple", "Coffee"],
+  "effects": ["Happy", "Uplifted"],
+  "description": "Optional user-provided description"
+}
+````
+
+response data:
+
+````json
+{
+  "message": "user1 just UPDATED list: SleepyOne",
+  //TODO ADD RESPONSE
+}```
+````
