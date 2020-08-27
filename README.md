@@ -4,12 +4,51 @@
 
 #### Users
 
-| Field    | Type    | Notes                              |
-| -------- | ------- | ---------------------------------- |
-| id       | integer | _primary key_ and _autoincrements_ |
-| username | string  | _required_ and _unique_            |
-| email    | string  | _required_                         |
-| password | string  | _required_                         |
+| Field     | Type    | Notes                              |
+| --------- | ------- | ---------------------------------- |
+| id        | integer | _primary key_ and _autoincrements_ |
+| username  | string  | _required_ and _unique_            |
+| email     | string  | _required_                         |
+| password  | string  | _required_                         |
+| zipcode   | integer | _optional_                         |
+| birthDate | date    | _optional_                         |
+
+#### Flavors
+
+| Field  | Type    | Notes                              |
+| ------ | ------- | ---------------------------------- |
+| id     | integer | _primary key_ and _autoincrements_ |
+| flavor | string  | _required_ and _unique_            |
+
+#### Effects
+
+| Field  | Type    | Notes                              |
+| ------ | ------- | ---------------------------------- |
+| id     | integer | _primary key_ and _autoincrements_ |
+| effect | string  | _required_ and _unique_            |
+
+#### Lists
+
+| Field       | Type    | Notes                              |
+| ----------- | ------- | ---------------------------------- |
+| id          | integer | _primary key_ and _autoincrements_ |
+| user_id     | string  | _required_                         |
+| listName    | string  | _required_                         |
+| description | string  | _optional_                         |
+
+#### List_Flavors
+
+| Field     | Type    | Notes                          |
+| --------- | ------- | ------------------------------ |
+| flavor_id | integer | \_required\* and _primary key_ |
+| list_id   | string  | \_required\* and _primary key_ |
+
+#### List_Effects
+
+| Field     | Type    | Notes                        |
+| --------- | ------- | ---------------------------- |
+| effect_id | integer | _required_ and _primary key_ |
+| list_id   | integer | _required_ and _primary key_ |
 
 ## API
 
@@ -34,6 +73,7 @@ test account:
 | DELETE\* | `/auth/delete-user`     | remove user - NO UNDO  |
 | PUT\*    | `/auth/change-password` | change password        |
 | GET\*    | `/users/lists`          | array of user lists    |
+| GET\*    | `/users/list/:listName` | view recommendations   |
 | POST\*   | `/users/add-list`       | create new list        |
 | DELETE\* | `/users/delete-list`    | delete list            |
 
@@ -147,7 +187,7 @@ response data:
 ]
 ```
 
-#### GET /users/lists
+#### GET /users/list/:listID
 
 (include auth token in headers)
 request data:
@@ -162,25 +202,6 @@ response data:
 
 ```json
 [
-    "list": {
-        "name": "Sleepy",
-        "description": "Dancer",
-        "effects": [
-            "Creative",
-            "Energetic",
-            "Tingly",
-            "Euphoric",
-            "Relaxed",
-            "Uplifted"
-        ],
-        "flavors": [
-            "Earthy",
-            "Sweet",
-            "Citrus",
-            "Flowery",
-            "Violet"
-        ]
-    },
     "results": [
         {
             "Description": "Qush is a 70/30 indica-dominant cannabis strain from TGA Genetics, who combines Pre-98 Bubba Kush with Space Queen. Bred for potency as well as flavor, Qush’s resin-packed buds radiate with sweet aromas of grape, cherry, and hashy spice. This tranquilizing strain has a way of calming worries and upset stomachs, but keep in mind that Qush can have a sedating, cloudy effect on the mind so consider saving this one for evenings and lazy days.",
