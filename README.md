@@ -354,7 +354,6 @@ response data:
             "Strain": "King-Kong",
             "Type": "hybrid"
         }
-    ]
 ]
 ```
 
