@@ -37,7 +37,7 @@ function getListId(listName, id) {
   return db("lists").where({ listName: listName, user_id: id }).select("id");
 }
 function updateLists(payload, type) {
-  //console.log(payload);
+  console.log(payload);
   if (type === "effect") {
     return db("list_effects").insert(payload);
   } else if (type === "flavor") {
@@ -55,12 +55,13 @@ function updatePrefs(payload, type) {
     return "you messed up. pass a 'type' argument as either 'effect', description, or 'flavor' please";
   }
 }
-function addList(listName, user_id, userDescription) {
-  return db("lists").insert({ user_id, listName, userDescription});
+function addList(listName, user_id, issues, strain, type, intake ) {
+  console.log(user_id, listName, issues, strain, type, intake )
+  return db("lists").insert({ user_id, listName, issues, strain, type, intake });
 }
 
 function getLists(id) {
-  return db("lists").where({user_id: id}).select("listName", "userDescription")
+  return db("lists").where({user_id: id}).select("listName", "issues", "strain", "type", "intake")
 }
 function getList(id) {
   return db("lists").where({id: id})

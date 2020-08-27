@@ -34,7 +34,10 @@
 | id          | integer | _primary key_ and _autoincrements_ |
 | user_id     | string  | _required_                         |
 | listName    | string  | _required_                         |
-| description | string  | _optional_                         |
+| issues      | string  | _optional_                         |
+| strain      | string  | _optional_                         |
+| type        | string  | _optional_                         |
+| intake      | string  | _optional_
 
 #### List_Flavors
 
@@ -178,11 +181,11 @@ response data:
 [
   {
     "listName": "Couch Lock",
-    "userDescription": "Something to wind down"
+    "issues": "Something to wind down"
   },
   {
     "listName": "Creative",
-    "userDescription": "Get creative juices flowing"
+    "issues": "Get creative juices flowing"
   }
 ]
 ```

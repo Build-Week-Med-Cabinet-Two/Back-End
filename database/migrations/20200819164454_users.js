@@ -26,7 +26,10 @@ exports.up = function (knex) {
       .references("users.id")
       .onDelete("cascade");
     tbl.string("listName", 256);
-    tbl.string("userDescription", 128).index();
+    tbl.string("issues", 128);
+    tbl.string("strain", 128);
+    tbl.string("type", 128);
+    tbl.string("intake", 128);
   })
   .createTable("list_effects", (tbl) => {
     tbl

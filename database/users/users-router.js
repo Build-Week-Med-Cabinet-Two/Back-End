@@ -38,7 +38,10 @@ async function getListObject(list_id) {
     const list = {
       name: name[0].listName,
       //    id: name[0].id,
-      description: name[0].userDescription,
+      issues: name[0].issues,
+      strain: name[0].strain,
+      type: name[0].type,
+      intake: name[0].intake,
       effects: effects.map((x) => x.effect),
       flavors: flavors.map((x) => x.flavor),
     };
@@ -114,14 +117,14 @@ router.post("/add-list", async (req, res) => {
 router.put("/update-list", async (req, res) => {
   try {
     let user = req.decodedJwt.username;
-    let oldListName = req.body.oldListName;
-    let listName = req.body.listName;
+    let { oldListName, listName, issues, strain, type, intake } = req.body;
+
     let description = req.body.description;
     let id = req.decodedJwt.subject;
     let newPreferences = req.body;
 
     await Users.deleteList(oldListName, id);
-    await Users.addList(listName, id, description);
+    await Users.addList(listName, id, issues, strain, type, intake );
     //let payload = await getListObject(id);
     //console.log(payload)
     const ListId = await Users.getListId(listName, id);
@@ -153,6 +156,7 @@ router.put("/update-list", async (req, res) => {
     await Users.updatePrefs(FlavorArr, "flavor");
     await Users.updatePrefs(EffectArr, "effect");
     let payload = await getListObject(newListId);
+    console.log(payload)
     let searchValue = Object.values(payload).flat().join(" ");
     //console.log(searchValue)
     let recommendations = await getRecs(searchValue);
