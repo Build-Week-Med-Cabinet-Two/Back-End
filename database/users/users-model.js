@@ -37,7 +37,7 @@ function getListId(listName, id) {
   return db("lists").where({ listName: listName, user_id: id }).select("id");
 }
 function updateLists(payload, type) {
-  console.log(payload);
+ // console.log(payload);
   if (type === "type") {
     return db("list_types").insert(payload);
   } else if (type === "intake") {
@@ -56,7 +56,7 @@ function updatePrefs(payload, type) {
   }
 }
 function addList(listName, user_id, issues, strain, effect, flavor ) {
-  console.log(user_id, listName, issues, strain, effect, flavor )
+ // console.log(user_id, listName, issues, strain, effect, flavor )
   return db("lists").insert({ user_id, listName, issues, strain, effect, flavor });
 }
 

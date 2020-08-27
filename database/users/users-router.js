@@ -55,7 +55,7 @@ router.post("/add-list", async (req, res) => {
   try {
     let user = req.decodedJwt.username;
     let listName = req.body.listName;
-    let description = req.body.description;
+    let { issues, strain, effect, flavor } = req.body;
     let id = req.decodedJwt.subject;
     let newPreferences = req.body;
 
@@ -67,10 +67,11 @@ router.post("/add-list", async (req, res) => {
       });
     }
 
-    await Users.addList(listName, id, description);
+    await Users.addList(listName, id,  issues, strain, effect, flavor);
     //let payload = await getListObject(id);
     //console.log(payload)
     const ListId = await Users.getListId(listName, id);
+
     let newListId = ListId[0].id;
 
     let allIntakes = await Users.getTypeOrIntakeIds("intake");
@@ -98,13 +99,14 @@ router.post("/add-list", async (req, res) => {
 
     await Users.updatePrefs(IntakeArr, "intake");
     await Users.updatePrefs(TypeArr, "type");
-    let payload = await getListObject(newListId);
-    let searchValue = Object.values(payload).flat().join(" ");
-    let recommendations = await getRecs(searchValue);
+    const payload = await getListObject(newListId);
+    const PayValues = Object.values(payload)
+    const searchString = [].concat.apply([], PayValues).join(" ");
+    let recommendations = await getRecs(searchString);
     res.status(200).json({
       message: ` ${user} just CREATED list: ${listName}`,
       list: payload,
-      results: reccomendations,
+      results: recommendations,
     });
   } catch (err) {
     res.status(500).json({
@@ -118,27 +120,24 @@ router.put("/update-list", async (req, res) => {
   try {
     let user = req.decodedJwt.username;
     let { oldListName, listName, issues, strain, effect, flavor } = req.body;
-
-    let description = req.body.description;
     let id = req.decodedJwt.subject;
     let newPreferences = req.body;
-
     await Users.deleteList(oldListName, id);
     await Users.addList(listName, id, issues, strain, effect, flavor );
     //let payload = await getListObject(id);
     //console.log(payload)
     const ListId = await Users.getListId(listName, id);
     let newListId = ListId[0].id;
-
+    
     let allIntakes = await Users.getTypeOrIntakeIds("intake");
     let allTypes = await Users.getTypeOrIntakeIds("type");
-
+    
     let someIntakes = allIntakes.filter((intake) => {
       return newPreferences.intakes.some(function (e) {
         return e == intake.intake;
       });
     });
-
+    
     let someTypes = allTypes.filter((type) => {
       return newPreferences.types.some(function (e) {
         return e == type.type;
@@ -148,18 +147,20 @@ router.put("/update-list", async (req, res) => {
       list_id: newListId,
       type_id: x.id,
     }));
+
     let IntakeArr = someIntakes.map((x) => ({
       list_id: newListId,
       intake_id: x.id,
     }));
-
     await Users.updatePrefs(IntakeArr, "intake");
     await Users.updatePrefs(TypeArr, "type");
-    let payload = await getListObject(newListId);
-    console.log(payload)
-    let searchValue = Object.values(payload).flat().join(" ");
+
+    const payload = await getListObject(newListId);
+    const PayValues = Object.values(payload)
+    const searchString = [].concat.apply([], PayValues).join(" ");
+   // let searchValue = Object.values(payload).flat().join(" ");
     //console.log(searchValue)
-    let recommendations = await getRecs(searchValue);
+    let recommendations = await getRecs(searchString);
     res.status(200).json({
       message: ` ${user} just UPDATED list: ${listName}`,
       list: payload,
@@ -180,7 +181,7 @@ router.get("/list/:listName", restricted, async (req, res) => {
   const payload = await getListObject(id[0].id);
   const PayValues = Object.values(payload)
   const searchString = [].concat.apply([], PayValues).join(" ");
-  console.log(searchString)
+  //console.log(searchString)
  // let searchValue = Object.values(payload).flat().join(" ");
   getRecs(searchString)
     .then((results) => {
