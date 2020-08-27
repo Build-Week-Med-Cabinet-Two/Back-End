@@ -318,7 +318,10 @@ request data:
 ```json
 {
   "listName": "Sleepy",
-  "description": "Optional user-provided description",
+  "issues": "optional user inputed issue(s)",
+  "strain": "optional user inputed strain(s)",
+  "type": "optional user inputed type(s)"
+  "intake": "optional user inputed intake(s)"
   "flavors": ["Earthy", "Coffee"],
   "effects": ["Happy", "Relaxed"]
 }
@@ -369,7 +372,10 @@ request data:
   "listName": "SleepyOne",
   "flavors": ["Apple", "Coffee"],
   "effects": ["Happy", "Uplifted"],
-  "description": "Optional user-provided description"
+   "issues": "optional user inputed issue(s)",
+  "strain": "optional user inputed strain(s)",
+  "type": "optional user inputed type(s)"
+  "intake": "optional user inputed intake(s)"
 }
 ```
 
