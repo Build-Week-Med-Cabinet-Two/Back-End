@@ -60,7 +60,7 @@ function addList(listName, user_id, userDescription) {
 }
 
 function getLists(id) {
-  return db("lists").where({user_id: id}).select("id", "listName as list_name", "userDescription as user_description")
+  return db("lists").where({user_id: id}).select("listName", "userDescription")
 }
 function getList(id) {
   return db("lists").where({id: id})

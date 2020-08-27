@@ -26,7 +26,7 @@ exports.up = function (knex) {
       .references("users.id")
       .onDelete("cascade");
     tbl.string("listName", 256);
-    tbl.string("userDescription", 128).notNullable().index();
+    tbl.string("userDescription", 128).index();
   })
   .createTable("list_effects", (tbl) => {
     tbl
