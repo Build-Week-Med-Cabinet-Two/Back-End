@@ -248,18 +248,22 @@ request data:
 response data:
 
 ```json
-{
 [
-  {
-    "listName": "Couch Lock",
-    "issues": "Something to wind down"
-  },
-  {
-    "listName": "Creative",
-    "issues": "Get creative juices flowing"
-  }
+    {
+        "listName": "Sleepy Time Tea",
+        "issues": "Goodnight Ya'll",
+        "strain": "Girl Scout Cookies",
+        "type": "indca",
+        "intake": "Vape"
+    },
+    {
+        "listName": "Sour Puss",
+        "issues": "bad mood",
+        "strain": "null",
+        "type": null,
+        "intake": "Smoke"
+    }
 ]
-}
 ```
 
 #### GET /users/list/:listName
