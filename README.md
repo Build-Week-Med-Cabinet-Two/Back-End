@@ -20,7 +20,7 @@
 | id     | integer | _primary key_ and _autoincrements_ |
 | flavor | string  | _required_ and _unique_            |
 
-AVAILABLE FLAVORS
+AVAILABLE FLAVORS:
     "Earthy",
     "Sweet",
     "Citrus",
@@ -70,7 +70,7 @@ AVAILABLE FLAVORS
     "Tar",
     "Rose",
     "Plum",
-    "Pear",
+    "Pear"
 
 
 #### Effects
@@ -80,7 +80,7 @@ AVAILABLE FLAVORS
 | id     | integer | _primary key_ and _autoincrements_ |
 | effect | string  | _required_ and _unique_            |
 
-AVAILABLE EFFECTS
+AVAILABLE EFFECTS:
     "Creative",
     "Energetic",
     "Tingly",
@@ -95,7 +95,7 @@ AVAILABLE EFFECTS
     "Giggly",
     "Focused",
     "Sleepy",
-    "Dry Mouth",
+    "Dry Mouth"
 
 #### Lists
 
