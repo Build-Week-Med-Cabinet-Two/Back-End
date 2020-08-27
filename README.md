@@ -260,7 +260,7 @@ response data:
 ]
 ```
 
-#### GET /users/list/:listID
+#### GET /users/list/:listName
 
 (include auth token in headers)
 request data:
