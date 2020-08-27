@@ -20,6 +20,7 @@
 | id     | integer | _primary key_ and _autoincrements_ |
 | intake | string  | _required_ and _unique_            |
 
+
 AVAILABLE INTAKES:
 "Vape",
 "Edible",
@@ -27,6 +28,7 @@ AVAILABLE INTAKES:
 "Topical"
 
 #### Types
+
 
 | Field | Effect  | Notes                              |
 | ----- | ------- | ---------------------------------- |
@@ -190,7 +192,7 @@ request data:
 response data:
 
 ```json
-[
+
   {
     "listName": "Sleepy Time Tea",
     "issues": "Goodnight Ya'll",
@@ -223,6 +225,7 @@ response data:
 
 ```json
 {
+
   "results": [
     {
       "Description": "Purple Cream has been a favorite of anxiety sufferers for over a decade. Great for nighttime use, this indica is mellow and calming. Purple Cream produces a moderate body-heavy sensation, relaxing your muscles and easing stress. The effects of this strain are quite sedative and can last around two hours. Like other purples, Purple Cream’s aroma is sweet, floral, and earthy.",
@@ -249,6 +252,7 @@ response data:
       "Type": "hybrid"
     }
   ]
+
 }
 ```
 
@@ -259,12 +263,14 @@ request data:
 ```json
 {
   "listName": "Sleepy",
+
   "intakes": ["Earthy", "Coffee"],
   "types": ["Happy", "Relaxed"],
   "issues": "optional user inputed issue(s)",
   "strain": "optional user inputed strain(s)",
   "effect": "optional user inputed effect(s)",
   "flavor": "optional user inputed flavor(s)"
+
 }
 ```
 
@@ -299,8 +305,9 @@ response data:
             "Strain": "Harry-Potter",
             "Type": "hybrid"
         }
+
     ]
-```
+
 
 #### PUT /users/update-list
 
@@ -311,12 +318,21 @@ request data:
 {
   "oldListName": "Sleepy",
   "listName": "SleepyOne",
+
   "intakes": ["Apple", "Coffee"],
   "types": ["Happy", "Uplifted"],
   "issues": "optional user inputed issue(s)",
   "strain": "optional user inputed strain(s)",
   "effect": "optional user inputed effect(s)",
   "flavor": "optional user inputed flavor(s)"
+
+  "flavors": ["Apple", "Coffee"],
+  "effects": ["Happy", "Uplifted"],
+   "issues": "optional user inputed issue(s)",
+  "strain": "optional user inputed strain(s)",
+  "type": "optional user inputed type(s)",
+  "intake": "optional user inputed intake(s)"
+
 }
 ```
 
