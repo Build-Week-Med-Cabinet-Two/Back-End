@@ -248,6 +248,7 @@ request data:
 response data:
 
 ```json
+{
 [
   {
     "listName": "Couch Lock",
@@ -258,6 +259,7 @@ response data:
     "issues": "Get creative juices flowing"
   }
 ]
+}
 ```
 
 #### GET /users/list/:listName
