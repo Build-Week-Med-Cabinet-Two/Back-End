@@ -178,8 +178,9 @@ router.get("/list/:listName", restricted, async (req, res) => {
   const list = req.params.listName;
   const id = await Users.getListId(list, req.decodedJwt.subject);
   const payload = await getListObject(id[0].id);
-  let searchValue = Object.values(payload).flat().join(" ");
-  getRecs(searchValue)
+  console.log(payload)
+//  let searchValue = Object.values(payload).flat().join(" ");
+  getRecs(payload)
     .then((results) => {
       res.status(200).json({ results: results });
     })

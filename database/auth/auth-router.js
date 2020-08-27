@@ -21,7 +21,8 @@ router.post("/register", (req, res) => {
   const credentials = req.body;
 
   if (isValid(credentials)) {
-    const rounds = process.env.BCRYPT_ROUNDS;
+
+    const rounds = bcryptjs.genSaltSync(10);
     const hash = bcryptjs.hashSync(credentials.password, rounds);
     credentials.password = hash;
 
@@ -61,7 +62,8 @@ router.put('/change-password', authenticate,(req, res) => {
   const changes = { password: req.body.password };
   const { subject, username } = req.decodedJwt;
   if (isValidPassword(changes)) {
-    const rounds = process.env.BCRYPT_ROUNDS;
+
+    const rounds = bcryptjs.genSaltSync(10);
     const hash = bcryptjs.hashSync(changes.password, rounds);
     changes.password = hash;
       Users.getUsers(subject)
