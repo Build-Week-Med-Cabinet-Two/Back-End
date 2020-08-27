@@ -148,6 +148,7 @@ test account:
 | GET\*    | `/users/lists`          | array of user lists    |
 | GET\*    | `/users/list/:listName` | view recommendations   |
 | POST\*   | `/users/add-list`       | create new list        |
+| PUT\*    | `/users/update-list`    | create new list        |
 | DELETE\* | `/users/delete-list`    | delete list            |
 
 \*(include auth token in headers)
@@ -317,9 +318,12 @@ request data:
 ```json
 {
   "listName": "Sleepy",
-  "description": "Optional user-provided description",
   "flavors": ["Earthy", "Coffee"],
-  "effects": ["Happy", "Relaxed"]
+  "effects": ["Happy", "Relaxed"],
+  "issues": "optional user inputed issue(s)",
+  "strain": "optional user inputed strain(s)",
+  "type": "optional user inputed type(s)",
+  "intake": "optional user inputed intake(s)"
 }
 ```
 
@@ -368,7 +372,10 @@ request data:
   "listName": "SleepyOne",
   "flavors": ["Apple", "Coffee"],
   "effects": ["Happy", "Uplifted"],
-  "description": "Optional user-provided description"
+   "issues": "optional user inputed issue(s)",
+  "strain": "optional user inputed strain(s)",
+  "type": "optional user inputed type(s)",
+  "intake": "optional user inputed intake(s)"
 }
 ```
 
