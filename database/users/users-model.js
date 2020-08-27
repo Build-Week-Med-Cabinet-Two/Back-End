@@ -12,17 +12,17 @@ module.exports = {
   getList,
   getLists,
   deleteList,
-  getEffects,
-  getFlavors,
-  getEffectOrFlavorIds,
+  getTypes,
+  getIntakes,
+  getTypeOrIntakeIds,
   updatePrefs
 };
-function getEffectOrFlavorIds(type) {
-  if (type === "effect") {
-    return db("effects");
+function getTypeOrIntakeIds(type) {
+  if (type === "type") {
+    return db("types");
   }
-  if (type === "flavor") {
-    return db("flavors");
+  if (type === "intake") {
+    return db("intakes");
   }
 }
 
@@ -38,30 +38,30 @@ function getListId(listName, id) {
 }
 function updateLists(payload, type) {
   console.log(payload);
-  if (type === "effect") {
-    return db("list_effects").insert(payload);
-  } else if (type === "flavor") {
-    return db("list_flavors").insert(payload);
+  if (type === "type") {
+    return db("list_types").insert(payload);
+  } else if (type === "intake") {
+    return db("list_intakes").insert(payload);
   } else {
-    return "pass a 'type' argument as either 'effect', description, or 'flavor' please";
+    return "pass a 'type' argument as either 'type', description, or 'intake' please";
   }
 }
 function updatePrefs(payload, type) {
-  if (type === "effect") {
-    return db("list_effects").insert(payload);
-  } else if (type === "flavor") {
-    return db("list_flavors").insert(payload);
+  if (type === "type") {
+    return db("list_types").insert(payload);
+  } else if (type === "intake") {
+    return db("list_intakes").insert(payload);
   } else {
-    return "you messed up. pass a 'type' argument as either 'effect', description, or 'flavor' please";
+    return "you messed up. pass a 'type' argument as either 'type', description, or 'intake' please";
   }
 }
-function addList(listName, user_id, issues, strain, type, intake ) {
-  console.log(user_id, listName, issues, strain, type, intake )
-  return db("lists").insert({ user_id, listName, issues, strain, type, intake });
+function addList(listName, user_id, issues, strain, effect, flavor ) {
+  console.log(user_id, listName, issues, strain, effect, flavor )
+  return db("lists").insert({ user_id, listName, issues, strain, effect, flavor });
 }
 
 function getLists(id) {
-  return db("lists").where({user_id: id}).select("listName", "issues", "strain", "type", "intake")
+  return db("lists").where({user_id: id}).select("listName", "issues", "strain", "effect", "flavor")
 }
 function getList(id) {
   return db("lists").where({id: id})
@@ -70,23 +70,23 @@ function deleteList(listName, userId) {
   return db("lists").where({ listName: listName, user_id: userId }).del();
 }
 
-async function getEffects(listID) {
+async function getTypes(listID) {
  try{
-     const effects = db("list_effects as le")
-    .join("effects as e", "e.id", "le.effect_id")
-    .where({list_id: listID}).select("effect")
-    return effects
+     const types = db("list_types as le")
+    .join("types as e", "e.id", "le.type_id")
+    .where({list_id: listID}).select("type")
+    return types
 } catch(error){
   throw error;
 }
 }
 
-async function getFlavors(listID) {
+async function getIntakes(listID) {
   try{
-    const flavors = db("list_flavors as le")
-    .join("flavors as e", "e.id", "le.flavor_id")
-    .where({list_id: listID}).select("flavor");
-     return flavors;
+    const intakes = db("list_intakes as le")
+    .join("intakes as e", "e.id", "le.intake_id")
+    .where({list_id: listID}).select("intake");
+     return intakes;
  } catch(error){
    throw error;
  }

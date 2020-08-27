@@ -1,5 +1,5 @@
 exports.seed = function (knex) {
-  const flavors = [
+  const intakes = [
     "Earthy",
     "Sweet",
     "Citrus",
@@ -52,9 +52,9 @@ exports.seed = function (knex) {
     "Pear",
   ];
 
-  const formattedFlavors = flavors.map((flavor) => {
-    return { flavor: flavor };
+  const formattedIntakes = intakes.map((intake) => {
+    return { intake: intake };
   });
 
-  return knex("flavors").insert(formattedFlavors);
+  return knex("intakes").insert(formattedIntakes);
 };

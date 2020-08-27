@@ -1,5 +1,5 @@
 exports.seed = function (knex) {
-  const effects = [
+  const types = [
     "Creative",
     "Energetic",
     "Tingly",
@@ -17,9 +17,9 @@ exports.seed = function (knex) {
     "Dry Mouth",
   ];
 
-  const formattedEffects = effects.map((effect) => {
-    return { effect: effect };
+  const formattedTypes = types.map((type) => {
+    return { type: type };
   });
 
-  return knex("effects").insert(formattedEffects);
+  return knex("types").insert(formattedTypes);
 };

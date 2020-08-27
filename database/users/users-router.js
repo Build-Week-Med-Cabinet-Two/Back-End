@@ -9,7 +9,7 @@ async function getRecs(prefs) {
   try {
     const formData = new FormData();
 
-    formData.append("Flavors/Effects", prefs);
+    formData.append("Intakes/Types", prefs);
 
     const recResponse = await axios.post(
       //TODO hook up with medcabinet 2 app
@@ -32,18 +32,18 @@ async function getRecs(prefs) {
 async function getListObject(list_id) {
   try {
     const name = await Users.getList(list_id);
-    const effects = await Users.getEffects(list_id);
-    const flavors = await Users.getFlavors(list_id);
+    const types = await Users.getTypes(list_id);
+    const intakes = await Users.getIntakes(list_id);
     // console.log(listID, name[0].listName, list_id)
     const list = {
       name: name[0].listName,
       //    id: name[0].id,
       issues: name[0].issues,
       strain: name[0].strain,
-      type: name[0].type,
-      intake: name[0].intake,
-      effects: effects.map((x) => x.effect),
-      flavors: flavors.map((x) => x.flavor),
+      effect: name[0].effect,
+      flavor: name[0].flavor,
+      types: types.map((x) => x.type),
+      intakes: intakes.map((x) => x.intake),
     };
     return list;
   } catch (err) {
@@ -73,31 +73,31 @@ router.post("/add-list", async (req, res) => {
     const ListId = await Users.getListId(listName, id);
     let newListId = ListId[0].id;
 
-    let allFlavors = await Users.getEffectOrFlavorIds("flavor");
-    let allEffects = await Users.getEffectOrFlavorIds("effect");
+    let allIntakes = await Users.getTypeOrIntakeIds("intake");
+    let allTypes = await Users.getTypeOrIntakeIds("type");
 
-    let someFlavors = allFlavors.filter((flavor) => {
-      return newPreferences.flavors.some(function (e) {
-        return e == flavor.flavor;
+    let someIntakes = allIntakes.filter((intake) => {
+      return newPreferences.intakes.some(function (e) {
+        return e == intake.intake;
       });
     });
 
-    let someEffects = allEffects.filter((effect) => {
-      return newPreferences.effects.some(function (e) {
-        return e == effect.effect;
+    let someTypes = allTypes.filter((type) => {
+      return newPreferences.types.some(function (e) {
+        return e == type.type;
       });
     });
-    let EffectArr = someEffects.map((x) => ({
+    let TypeArr = someTypes.map((x) => ({
       list_id: newListId,
-      effect_id: x.id,
+      type_id: x.id,
     }));
-    let FlavorArr = someFlavors.map((x) => ({
+    let IntakeArr = someIntakes.map((x) => ({
       list_id: newListId,
-      flavor_id: x.id,
+      intake_id: x.id,
     }));
 
-    await Users.updatePrefs(FlavorArr, "flavor");
-    await Users.updatePrefs(EffectArr, "effect");
+    await Users.updatePrefs(IntakeArr, "intake");
+    await Users.updatePrefs(TypeArr, "type");
     let payload = await getListObject(newListId);
     let searchValue = Object.values(payload).flat().join(" ");
     let recommendations = await getRecs(searchValue);
@@ -117,44 +117,44 @@ router.post("/add-list", async (req, res) => {
 router.put("/update-list", async (req, res) => {
   try {
     let user = req.decodedJwt.username;
-    let { oldListName, listName, issues, strain, type, intake } = req.body;
+    let { oldListName, listName, issues, strain, effect, flavor } = req.body;
 
     let description = req.body.description;
     let id = req.decodedJwt.subject;
     let newPreferences = req.body;
 
     await Users.deleteList(oldListName, id);
-    await Users.addList(listName, id, issues, strain, type, intake );
+    await Users.addList(listName, id, issues, strain, effect, flavor );
     //let payload = await getListObject(id);
     //console.log(payload)
     const ListId = await Users.getListId(listName, id);
     let newListId = ListId[0].id;
 
-    let allFlavors = await Users.getEffectOrFlavorIds("flavor");
-    let allEffects = await Users.getEffectOrFlavorIds("effect");
+    let allIntakes = await Users.getTypeOrIntakeIds("intake");
+    let allTypes = await Users.getTypeOrIntakeIds("type");
 
-    let someFlavors = allFlavors.filter((flavor) => {
-      return newPreferences.flavors.some(function (e) {
-        return e == flavor.flavor;
+    let someIntakes = allIntakes.filter((intake) => {
+      return newPreferences.intakes.some(function (e) {
+        return e == intake.intake;
       });
     });
 
-    let someEffects = allEffects.filter((effect) => {
-      return newPreferences.effects.some(function (e) {
-        return e == effect.effect;
+    let someTypes = allTypes.filter((type) => {
+      return newPreferences.types.some(function (e) {
+        return e == type.type;
       });
     });
-    let EffectArr = someEffects.map((x) => ({
+    let TypeArr = someTypes.map((x) => ({
       list_id: newListId,
-      effect_id: x.id,
+      type_id: x.id,
     }));
-    let FlavorArr = someFlavors.map((x) => ({
+    let IntakeArr = someIntakes.map((x) => ({
       list_id: newListId,
-      flavor_id: x.id,
+      intake_id: x.id,
     }));
 
-    await Users.updatePrefs(FlavorArr, "flavor");
-    await Users.updatePrefs(EffectArr, "effect");
+    await Users.updatePrefs(IntakeArr, "intake");
+    await Users.updatePrefs(TypeArr, "type");
     let payload = await getListObject(newListId);
     console.log(payload)
     let searchValue = Object.values(payload).flat().join(" ");
