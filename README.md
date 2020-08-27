@@ -20,12 +20,82 @@
 | id     | integer | _primary key_ and _autoincrements_ |
 | flavor | string  | _required_ and _unique_            |
 
+AVAILABLE FLAVORS:
+    "Earthy",
+    "Sweet",
+    "Citrus",
+    "Flowery",
+    "Violet",
+    "Diesel",
+    "Spicy/Herbal",
+    "Sage",
+    "Woody",
+    "Apricot",
+    "Grapefruit",
+    "Orange",
+    "None",
+    "Pungent",
+    "Grape",
+    "Pine",
+    "Skunk",
+    "Berry",
+    "Pepper",
+    "Menthol",
+    "Blue Cheese",
+    "Cheese",
+    "Chemical",
+    "Mango",
+    "Lemon",
+    "Peach",
+    "Vanilla",
+    "Nutty",
+    "Chestnut",
+    "Tea",
+    "Tobacco",
+    "Tropical",
+    "Strawberry",
+    "Blueberry",
+    "Mint",
+    "Apple",
+    "Honey",
+    "Lavender",
+    "Lime",
+    "Coffee",
+    "Ammonia",
+    "Minty",
+    "Tree",
+    "Fruit",
+    "Butter",
+    "Pineapple",
+    "Tar",
+    "Rose",
+    "Plum",
+    "Pear"
+
+
 #### Effects
 
 | Field  | Type    | Notes                              |
 | ------ | ------- | ---------------------------------- |
 | id     | integer | _primary key_ and _autoincrements_ |
 | effect | string  | _required_ and _unique_            |
+
+AVAILABLE EFFECTS:
+    "Creative",
+    "Energetic",
+    "Tingly",
+    "Euphoric",
+    "Relaxed",
+    "Aroused",
+    "Happy",
+    "Uplifted",
+    "Hungry",
+    "Talkative",
+    "None",
+    "Giggly",
+    "Focused",
+    "Sleepy",
+    "Dry Mouth"
 
 #### Lists
 
@@ -135,7 +205,7 @@ response data:
 }
 ```
 
-### DELETE /auth/delete-user
+#### DELETE /auth/delete-user
 
 response data:
 
@@ -179,18 +249,24 @@ response data:
 
 ```json
 [
-  {
-    "listName": "Couch Lock",
-    "issues": "Something to wind down"
-  },
-  {
-    "listName": "Creative",
-    "issues": "Get creative juices flowing"
-  }
+    {
+        "listName": "Sleepy Time Tea",
+        "issues": "Goodnight Ya'll",
+        "strain": "Girl Scout Cookies",
+        "type": "indca",
+        "intake": "Vape"
+    },
+    {
+        "listName": "Sour Puss",
+        "issues": "bad mood",
+        "strain": "null",
+        "type": null,
+        "intake": "Smoke"
+    }
 ]
 ```
 
-#### GET /users/list/:listID
+#### GET /users/list/:listName
 
 (include auth token in headers)
 request data:
@@ -204,7 +280,7 @@ request data:
 response data:
 
 ```json
-[
+{
     "results": [
         {
             "Description": "Qush is a 70/30 indica-dominant cannabis strain from TGA Genetics, who combines Pre-98 Bubba Kush with Space Queen. Bred for potency as well as flavor, Qush’s resin-packed buds radiate with sweet aromas of grape, cherry, and hashy spice. This tranquilizing strain has a way of calming worries and upset stomachs, but keep in mind that Qush can have a sedating, cloudy effect on the mind so consider saving this one for evenings and lazy days.",
@@ -231,7 +307,7 @@ response data:
             "Type": "hybrid"
         }
     ]
-]
+}
 ```
 
 #### POST users/add-list
@@ -250,7 +326,7 @@ request data:
 response data:
 
 ```json
-{
+[
   {
   "message": " user just CREATED list: Sleepy",
   "results": [
@@ -278,8 +354,7 @@ response data:
             "Strain": "King-Kong",
             "Type": "hybrid"
         }
-    ]
-}
+]
 ```
 
 #### PUT /users/update-list
