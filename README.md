@@ -4,7 +4,7 @@
 
 #### Users
 
-| Field     | Type    | Notes                              |
+| Field     | Effect  | Notes                              |
 | --------- | ------- | ---------------------------------- |
 | id        | integer | _primary key_ and _autoincrements_ |
 | username  | string  | _required_ and _unique_            |
@@ -13,115 +13,58 @@
 | zipcode   | integer | _optional_                         |
 | birthDate | date    | _optional_                         |
 
-#### Flavors
+#### Intakes
 
-| Field  | Type    | Notes                              |
+| Field  | Effect  | Notes                              |
 | ------ | ------- | ---------------------------------- |
 | id     | integer | _primary key_ and _autoincrements_ |
-| flavor | string  | _required_ and _unique_            |
-
-AVAILABLE FLAVORS:
-    "Earthy",
-    "Sweet",
-    "Citrus",
-    "Flowery",
-    "Violet",
-    "Diesel",
-    "Spicy/Herbal",
-    "Sage",
-    "Woody",
-    "Apricot",
-    "Grapefruit",
-    "Orange",
-    "None",
-    "Pungent",
-    "Grape",
-    "Pine",
-    "Skunk",
-    "Berry",
-    "Pepper",
-    "Menthol",
-    "Blue Cheese",
-    "Cheese",
-    "Chemical",
-    "Mango",
-    "Lemon",
-    "Peach",
-    "Vanilla",
-    "Nutty",
-    "Chestnut",
-    "Tea",
-    "Tobacco",
-    "Tropical",
-    "Strawberry",
-    "Blueberry",
-    "Mint",
-    "Apple",
-    "Honey",
-    "Lavender",
-    "Lime",
-    "Coffee",
-    "Ammonia",
-    "Minty",
-    "Tree",
-    "Fruit",
-    "Butter",
-    "Pineapple",
-    "Tar",
-    "Rose",
-    "Plum",
-    "Pear"
+| intake | string  | _required_ and _unique_            |
 
 
-#### Effects
+AVAILABLE INTAKES:
+"Vape",
+"Edible",
+"Smoke",
+"Topical"
 
-| Field  | Type    | Notes                              |
-| ------ | ------- | ---------------------------------- |
-| id     | integer | _primary key_ and _autoincrements_ |
-| effect | string  | _required_ and _unique_            |
+#### Types
 
-AVAILABLE EFFECTS:
-    "Creative",
-    "Energetic",
-    "Tingly",
-    "Euphoric",
-    "Relaxed",
-    "Aroused",
-    "Happy",
-    "Uplifted",
-    "Hungry",
-    "Talkative",
-    "None",
-    "Giggly",
-    "Focused",
-    "Sleepy",
-    "Dry Mouth"
+
+| Field | Effect  | Notes                              |
+| ----- | ------- | ---------------------------------- |
+| id    | integer | _primary key_ and _autoincrements_ |
+| type  | string  | _required_ and _unique_            |
+
+AVAILABLE TYPES:
+"Indica",
+"Sativa",
+"Hybrid"
 
 #### Lists
 
-| Field       | Type    | Notes                              |
-| ----------- | ------- | ---------------------------------- |
-| id          | integer | _primary key_ and _autoincrements_ |
-| user_id     | string  | _required_                         |
-| listName    | string  | _required_                         |
-| issues      | string  | _optional_                         |
-| strain      | string  | _optional_                         |
-| type        | string  | _optional_                         |
-| intake      | string  | _optional_
+| Field    | Effect  | Notes                              |
+| -------- | ------- | ---------------------------------- |
+| id       | integer | _primary key_ and _autoincrements_ |
+| user_id  | string  | _required_                         |
+| listName | string  | _required_                         |
+| issues   | string  | _optional_                         |
+| strain   | string  | _optional_                         |
+| effect   | string  | _optional_                         |
+| flavor   | string  | _optional_                         |
 
-#### List_Flavors
+#### List_Intakes
 
-| Field     | Type    | Notes                          |
-| --------- | ------- | ------------------------------ |
-| flavor_id | integer | \_required\* and _primary key_ |
-| list_id   | string  | \_required\* and _primary key_ |
-
-#### List_Effects
-
-| Field     | Type    | Notes                        |
+| Field     | Effect  | Notes                        |
 | --------- | ------- | ---------------------------- |
-| effect_id | integer | _required_ and _primary key_ |
-| list_id   | integer | _required_ and _primary key_ |
+| intake_id | integer | _required_ and _primary key_ |
+| list_id   | string  | _required_ and _primary key_ |
+
+#### List_Types
+
+| Field   | Effect  | Notes                        |
+| ------- | ------- | ---------------------------- |
+| type_id | integer | _required_ and _primary key_ |
+| list_id | integer | _required_ and _primary key_ |
 
 ## API
 
@@ -139,7 +82,7 @@ test account:
 
 #### Table of Contents
 
-| Type     | Path                    | Notes                  |
+| Effect   | Path                    | Notes                  |
 | -------- | ----------------------- | ---------------------- |
 | POST     | `/auth/register`        | register a new user    |
 | POST     | `/auth/login`           | login an existing user |
@@ -249,21 +192,21 @@ request data:
 response data:
 
 ```json
-[
-    {
-        "listName": "Sleepy Time Tea",
-        "issues": "Goodnight Ya'll",
-        "strain": "Girl Scout Cookies",
-        "type": "indca",
-        "intake": "Vape"
-    },
-    {
-        "listName": "Sour Puss",
-        "issues": "bad mood",
-        "strain": "null",
-        "type": null,
-        "intake": "Smoke"
-    }
+
+  {
+    "listName": "Sleepy Time Tea",
+    "issues": "Goodnight Ya'll",
+    "strain": "Girl Scout Cookies",
+    "effect": "sweet dreams",
+    "flavor": "hot cocoa"
+  },
+  {
+    "listName": "Sour Puss",
+    "issues": "bad mood",
+    "strain": "gorilla glue",
+    "effect": "head high",
+    "flavor": "Smoke"
+  }
 ]
 ```
 
@@ -282,32 +225,34 @@ response data:
 
 ```json
 {
-    "results": [
-        {
-            "Description": "Qush is a 70/30 indica-dominant cannabis strain from TGA Genetics, who combines Pre-98 Bubba Kush with Space Queen. Bred for potency as well as flavor, Qush’s resin-packed buds radiate with sweet aromas of grape, cherry, and hashy spice. This tranquilizing strain has a way of calming worries and upset stomachs, but keep in mind that Qush can have a sedating, cloudy effect on the mind so consider saving this one for evenings and lazy days.",
-            "Effects": "Relaxed,Sleepy,Uplifted,Happy,Euphoric",
-            "Flavor": "Flowery,Citrus,Pungent",
-            "Rating": 4.5,
-            "Strain": "Qush",
-            "Type": "indica"
-        },
-        {
-            "Description": "Another member of the “planetary series,” Venus OG is a hybrid strain bearing OG Kush heritage, although its specific parent strains are disputed. Each glistening trichome carries a resemblance to the bright planet this strain is named after, coating its conic buds in a galactic blanket of white crystals. A fresh pine aroma mixed with sour notes of lemon draws you in, and next comes the heavy euphoria to take away your sense of gravity and lift you to a happy, relaxed place.",
-            "Effects": "Focused,Tingly,Happy,Uplifted,Creative",
-            "Flavor": "Citrus,Lemon,Berry",
-            "Rating": 4.8,
-            "Strain": "Venus-Og",
-            "Type": "hybrid"
-        },
-        {
-            "Description": "King Kong, mothered by Ed Rosenthal Super Bud, is an indica-dominant hybrid with head-to-toe effects as strong as the giant ape himself. These dense conic buds come frosted in crystals and ribboned in hairs despite its short flowering time of only 7 to 8 weeks. King Kong is known to have a pungent sour, skunky smell with long-lasting effects that target pain, nausea, anxiety, and the appetite. Even though its genetics tip toward the indica side, King Kong has an uplifting and focused effect enjoyed by indica and sativa lovers alike.",
-            "Effects": "Happy,Focused,Giggly,Relaxed,Uplifted",
-            "Flavor": "Earthy,Flowery,Pungent",
-            "Rating": 4.2,
-            "Strain": "King-Kong",
-            "Type": "hybrid"
-        }
-    ]
+
+  "results": [
+    {
+      "Description": "Purple Cream has been a favorite of anxiety sufferers for over a decade. Great for nighttime use, this indica is mellow and calming. Purple Cream produces a moderate body-heavy sensation, relaxing your muscles and easing stress. The effects of this strain are quite sedative and can last around two hours. Like other purples, Purple Cream’s aroma is sweet, floral, and earthy.",
+      "Effects": "Happy,Relaxed,Sleepy,Hungry,Giggly",
+      "Flavor": "Sweet,Pine,Earthy",
+      "Rating": 4.3,
+      "Strain": "Purple-Cream",
+      "Type": "indica"
+    },
+    {
+      "Description": "Cornbread by Rare Dankness is an 80/20 indica-dominant hybrid strain that crosses Katsu Bubba Kush and Rare Dankness #2. Its aroma is a sweet mix of lemons and incense, and like a perfect appetizer, Cornbread is all you’ll need to invite the appetite before dinner. With heavy, tranquilizing effects that relax the body, Cornbread also makes a great nightcap as you transition into sleep.",
+      "Effects": "Relaxed,Euphoric,Hungry,Happy,Sleepy",
+      "Flavor": "Lemon,Citrus,Woody",
+      "Rating": 4.6,
+      "Strain": "Cornbread",
+      "Type": "indica"
+    },
+    {
+      "Description": "Harry Potter is an otherworldly hybrid strain that crosses Blissful Wizard with Fire Alien Kush. Bred by Sasquatch Gardens in California, Harry Potter casts a pacifying spell over the body, easing aches and pains while hushing anxiety. ",
+      "Effects": "Relaxed,Happy,Uplifted,Creative,Giggly",
+      "Flavor": "Sweet,Citrus,Lemon",
+      "Rating": 4.8,
+      "Strain": "Harry-Potter",
+      "Type": "hybrid"
+    }
+  ]
+
 }
 ```
 
@@ -318,12 +263,14 @@ request data:
 ```json
 {
   "listName": "Sleepy",
-  "flavors": ["Earthy", "Coffee"],
-  "effects": ["Happy", "Relaxed"],
+
+  "intakes": ["Earthy", "Coffee"],
+  "types": ["Happy", "Relaxed"],
   "issues": "optional user inputed issue(s)",
   "strain": "optional user inputed strain(s)",
-  "type": "optional user inputed type(s)",
-  "intake": "optional user inputed intake(s)"
+  "effect": "optional user inputed effect(s)",
+  "flavor": "optional user inputed flavor(s)"
+
 }
 ```
 
@@ -333,33 +280,34 @@ response data:
 [
   {
   "message": " user just CREATED list: Sleepy",
-  "results": [
+    "results": [
         {
-            "Description": "Qush is a 70/30 indica-dominant cannabis strain from TGA Genetics, who combines Pre-98 Bubba Kush with Space Queen. Bred for potency as well as flavor, Qush’s resin-packed buds radiate with sweet aromas of grape, cherry, and hashy spice. This tranquilizing strain has a way of calming worries and upset stomachs, but keep in mind that Qush can have a sedating, cloudy effect on the mind so consider saving this one for evenings and lazy days.",
-            "Effects": "Relaxed,Sleepy,Uplifted,Happy,Euphoric",
-            "Flavor": "Flowery,Citrus,Pungent",
-            "Rating": 4.5,
-            "Strain": "Qush",
+            "Description": "Purple Cream has been a favorite of anxiety sufferers for over a decade. Great for nighttime use, this indica is mellow and calming. Purple Cream produces a moderate body-heavy sensation, relaxing your muscles and easing stress. The effects of this strain are quite sedative and can last around two hours. Like other purples, Purple Cream’s aroma is sweet, floral, and earthy.",
+            "Effects": "Happy,Relaxed,Sleepy,Hungry,Giggly",
+            "Flavor": "Sweet,Pine,Earthy",
+            "Rating": 4.3,
+            "Strain": "Purple-Cream",
             "Type": "indica"
         },
         {
-            "Description": "Another member of the “planetary series,” Venus OG is a hybrid strain bearing OG Kush heritage, although its specific parent strains are disputed. Each glistening trichome carries a resemblance to the bright planet this strain is named after, coating its conic buds in a galactic blanket of white crystals. A fresh pine aroma mixed with sour notes of lemon draws you in, and next comes the heavy euphoria to take away your sense of gravity and lift you to a happy, relaxed place.",
-            "Effects": "Focused,Tingly,Happy,Uplifted,Creative",
-            "Flavor": "Citrus,Lemon,Berry",
-            "Rating": 4.8,
-            "Strain": "Venus-Og",
-            "Type": "hybrid"
+            "Description": "Cornbread by Rare Dankness is an 80/20 indica-dominant hybrid strain that crosses Katsu Bubba Kush and Rare Dankness #2. Its aroma is a sweet mix of lemons and incense, and like a perfect appetizer, Cornbread is all you’ll need to invite the appetite before dinner. With heavy, tranquilizing effects that relax the body, Cornbread also makes a great nightcap as you transition into sleep.",
+            "Effects": "Relaxed,Euphoric,Hungry,Happy,Sleepy",
+            "Flavor": "Lemon,Citrus,Woody",
+            "Rating": 4.6,
+            "Strain": "Cornbread",
+            "Type": "indica"
         },
         {
-            "Description": "King Kong, mothered by Ed Rosenthal Super Bud, is an indica-dominant hybrid with head-to-toe effects as strong as the giant ape himself. These dense conic buds come frosted in crystals and ribboned in hairs despite its short flowering time of only 7 to 8 weeks. King Kong is known to have a pungent sour, skunky smell with long-lasting effects that target pain, nausea, anxiety, and the appetite. Even though its genetics tip toward the indica side, King Kong has an uplifting and focused effect enjoyed by indica and sativa lovers alike.",
-            "Effects": "Happy,Focused,Giggly,Relaxed,Uplifted",
-            "Flavor": "Earthy,Flowery,Pungent",
-            "Rating": 4.2,
-            "Strain": "King-Kong",
+            "Description": "Harry Potter is an otherworldly hybrid strain that crosses Blissful Wizard with Fire Alien Kush. Bred by Sasquatch Gardens in California, Harry Potter casts a pacifying spell over the body, easing aches and pains while hushing anxiety. ",
+            "Effects": "Relaxed,Happy,Uplifted,Creative,Giggly",
+            "Flavor": "Sweet,Citrus,Lemon",
+            "Rating": 4.8,
+            "Strain": "Harry-Potter",
             "Type": "hybrid"
         }
-]
-```
+
+    ]
+
 
 #### PUT /users/update-list
 
@@ -370,12 +318,21 @@ request data:
 {
   "oldListName": "Sleepy",
   "listName": "SleepyOne",
+
+  "intakes": ["Apple", "Coffee"],
+  "types": ["Happy", "Uplifted"],
+  "issues": "optional user inputed issue(s)",
+  "strain": "optional user inputed strain(s)",
+  "effect": "optional user inputed effect(s)",
+  "flavor": "optional user inputed flavor(s)"
+
   "flavors": ["Apple", "Coffee"],
   "effects": ["Happy", "Uplifted"],
    "issues": "optional user inputed issue(s)",
   "strain": "optional user inputed strain(s)",
   "type": "optional user inputed type(s)",
   "intake": "optional user inputed intake(s)"
+
 }
 ```
 
@@ -386,27 +343,27 @@ response data:
   "message": "user1 just UPDATED list: SleepyOne",
   "results": [
     {
-      "Description": "Qush is a 70/30 indica-dominant cannabis strain from TGA Genetics, who combines Pre-98 Bubba Kush with Space Queen. Bred for potency as well as flavor, Qush’s resin-packed buds radiate with sweet aromas of grape, cherry, and hashy spice. This tranquilizing strain has a way of calming worries and upset stomachs, but keep in mind that Qush can have a sedating, cloudy effect on the mind so consider saving this one for evenings and lazy days.",
-      "Effects": "Relaxed,Sleepy,Uplifted,Happy,Euphoric",
-      "Flavor": "Flowery,Citrus,Pungent",
-      "Rating": 4.5,
-      "Strain": "Qush",
+      "Description": "Purple Cream has been a favorite of anxiety sufferers for over a decade. Great for nighttime use, this indica is mellow and calming. Purple Cream produces a moderate body-heavy sensation, relaxing your muscles and easing stress. The effects of this strain are quite sedative and can last around two hours. Like other purples, Purple Cream’s aroma is sweet, floral, and earthy.",
+      "Effects": "Happy,Relaxed,Sleepy,Hungry,Giggly",
+      "Flavor": "Sweet,Pine,Earthy",
+      "Rating": 4.3,
+      "Strain": "Purple-Cream",
       "Type": "indica"
     },
     {
-      "Description": "Another member of the “planetary series,” Venus OG is a hybrid strain bearing OG Kush heritage, although its specific parent strains are disputed. Each glistening trichome carries a resemblance to the bright planet this strain is named after, coating its conic buds in a galactic blanket of white crystals. A fresh pine aroma mixed with sour notes of lemon draws you in, and next comes the heavy euphoria to take away your sense of gravity and lift you to a happy, relaxed place.",
-      "Effects": "Focused,Tingly,Happy,Uplifted,Creative",
-      "Flavor": "Citrus,Lemon,Berry",
-      "Rating": 4.8,
-      "Strain": "Venus-Og",
-      "Type": "hybrid"
+      "Description": "Cornbread by Rare Dankness is an 80/20 indica-dominant hybrid strain that crosses Katsu Bubba Kush and Rare Dankness #2. Its aroma is a sweet mix of lemons and incense, and like a perfect appetizer, Cornbread is all you’ll need to invite the appetite before dinner. With heavy, tranquilizing effects that relax the body, Cornbread also makes a great nightcap as you transition into sleep.",
+      "Effects": "Relaxed,Euphoric,Hungry,Happy,Sleepy",
+      "Flavor": "Lemon,Citrus,Woody",
+      "Rating": 4.6,
+      "Strain": "Cornbread",
+      "Type": "indica"
     },
     {
-      "Description": "King Kong, mothered by Ed Rosenthal Super Bud, is an indica-dominant hybrid with head-to-toe effects as strong as the giant ape himself. These dense conic buds come frosted in crystals and ribboned in hairs despite its short flowering time of only 7 to 8 weeks. King Kong is known to have a pungent sour, skunky smell with long-lasting effects that target pain, nausea, anxiety, and the appetite. Even though its genetics tip toward the indica side, King Kong has an uplifting and focused effect enjoyed by indica and sativa lovers alike.",
-      "Effects": "Happy,Focused,Giggly,Relaxed,Uplifted",
-      "Flavor": "Earthy,Flowery,Pungent",
-      "Rating": 4.2,
-      "Strain": "King-Kong",
+      "Description": "Harry Potter is an otherworldly hybrid strain that crosses Blissful Wizard with Fire Alien Kush. Bred by Sasquatch Gardens in California, Harry Potter casts a pacifying spell over the body, easing aches and pains while hushing anxiety. ",
+      "Effects": "Relaxed,Happy,Uplifted,Creative,Giggly",
+      "Flavor": "Sweet,Citrus,Lemon",
+      "Rating": 4.8,
+      "Strain": "Harry-Potter",
       "Type": "hybrid"
     }
   ]

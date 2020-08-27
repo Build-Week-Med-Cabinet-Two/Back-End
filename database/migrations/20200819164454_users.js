@@ -8,13 +8,13 @@ exports.up = function (knex) {
     tbl.string("password", 256).notNullable();
   })
 
-  .createTable("flavors", (tbl) => {
+  .createTable("intakes", (tbl) => {
     tbl.increments();
-    tbl.string("flavor", 128).notNullable().unique();
+    tbl.string("intake", 128).notNullable().unique();
   })
-  .createTable("effects", (tbl) => {
+  .createTable("types", (tbl) => {
     tbl.increments();
-    tbl.string("effect", 128).notNullable().unique();
+    tbl.string("type", 128).notNullable().unique();
   })
 
   .createTable("lists", (tbl) => {
@@ -28,10 +28,10 @@ exports.up = function (knex) {
     tbl.string("listName", 256);
     tbl.string("issues", 128);
     tbl.string("strain", 128);
-    tbl.string("type", 128);
-    tbl.string("intake", 128);
+    tbl.string("effect", 128);
+    tbl.string("flavor", 128);
   })
-  .createTable("list_effects", (tbl) => {
+  .createTable("list_types", (tbl) => {
     tbl
       .integer("list_id")
       .notNullable()
@@ -39,13 +39,13 @@ exports.up = function (knex) {
       .references("lists.id")
       .onDelete("cascade");
     tbl
-      .integer("effect_id")
+      .integer("type_id")
       .notNullable()
       .unsigned()
-      .references("effects.id");
-    tbl.primary(["list_id", "effect_id"]); //forces the primary key so that there can't be id mismatches
+      .references("types.id");
+    tbl.primary(["list_id", "type_id"]); //forces the primary key so that there can't be id mismatches
   })
-  .createTable("list_flavors", (tbl) => {
+  .createTable("list_intakes", (tbl) => {
     tbl
       .integer("list_id")
       .notNullable()
@@ -53,21 +53,21 @@ exports.up = function (knex) {
       .references("lists.id")
       .onDelete("cascade");
     tbl
-      .integer("flavor_id")
+      .integer("intake_id")
       .notNullable()
       .unsigned()
-      .references("flavors.id");
-    tbl.primary(["list_id", "flavor_id"]); //forces the primary key so that there can't be id mismatches
+      .references("intakes.id");
+    tbl.primary(["list_id", "intake_id"]); //forces the primary key so that there can't be id mismatches
   })
 }
 
 exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists("list_descriptions")
-    .dropTableIfExists("list_flavors")
-    .dropTableIfExists("list_effects")
+    .dropTableIfExists("list_intakes")
+    .dropTableIfExists("list_types")
     .dropTableIfExists("lists")
-    .dropTableIfExists("effects")
-    .dropTableIfExists("flavors")
+    .dropTableIfExists("types")
+    .dropTableIfExists("intakes")
     .dropTableIfExists("users");
 };
