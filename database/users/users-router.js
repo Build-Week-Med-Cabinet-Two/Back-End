@@ -3,23 +3,17 @@ const router = require("express").Router();
 const restricted = require("../middleware/restricted.js");
 const Users = require("./users-model.js");
 const axios = require("axios");
-const FormData = require("form-data");
+
+const DATABASE_URL = process.env.DATABASE_URL;
+
 
 async function getRecs(prefs) {
   try {
-    const formData = new FormData();
-
-    formData.append("Flavors/Effects", prefs);
+    data = { "input" : prefs }
 
     const recResponse = await axios.post(
-      //TODO hook up with medcabinet 2 app
-      "https://medcabinet-ds.herokuapp.com/recommend",
-      formData,
-      {
-        // You need to use `getHeaders()` in Node.js because Axios doesn't
-        // automatically set the multipart form boundary in Node.
-        headers: formData.getHeaders(),
-      }
+      DATABASE_URL,
+      data
     );
     const recommendations = recResponse.data;
 
@@ -28,6 +22,30 @@ async function getRecs(prefs) {
     return err.message;
   }
 }
+
+
+// async function getRecs(prefs) {
+//   try {
+//     const formData = new FormData();
+
+//     formData.append("Flavors/Effects", prefs);
+
+//     const recResponse = await axios.post(
+//       DATABASE_URL,
+//       formData,
+//       {
+//         // You need to use `getHeaders()` in Node.js because Axios doesn't
+//         // automatically set the multipart form boundary in Node.
+//         headers: formData.getHeaders(),
+//       }
+//     );
+//     const recommendations = recResponse.data;
+
+//     return recommendations;
+//   } catch (err) {
+//     return err.message;
+//   }
+// }
 
 async function getListObject(list_id) {
   try {
