@@ -130,31 +130,35 @@ router.put("/update-list", async (req, res) => {
     let newListId = ListId[0].id;
 
     let allIntakes = await Users.getTypeOrIntakeIds("intake");
-    if (newPreferences.intakes.length !== 0) {
-      let someIntakes = allIntakes.filter((intake) => {
-        return newPreferences.intakes.some(function (e) {
-          return e == intake.intake;
+    if (newPreferences.intakes) {
+      if (newPreferences.intakes.length !== 0) {
+        let someIntakes = allIntakes.filter((intake) => {
+          return newPreferences.intakes.some(function (e) {
+            return e == intake.intake;
+          });
         });
-      });
-      let IntakeArr = someIntakes.map((x) => ({
-        list_id: newListId,
-        intake_id: x.id,
-      }));
-      await Users.updatePrefs(IntakeArr, "intake");
+        let IntakeArr = someIntakes.map((x) => ({
+          list_id: newListId,
+          intake_id: x.id,
+        }));
+        await Users.updatePrefs(IntakeArr, "intake");
+      }
     }
-    if (newPreferences.types.length !== 0) {
-      let allTypes = await Users.getTypeOrIntakeIds("type");
-      let someTypes = allTypes.filter((type) => {
-        return newPreferences.types.some(function (e) {
-          return e == type.type;
+    if (newPreferences.types) {
+      if (newPreferences.types.length !== 0) {
+        let allTypes = await Users.getTypeOrIntakeIds("type");
+        let someTypes = allTypes.filter((type) => {
+          return newPreferences.types.some(function (e) {
+            return e == type.type;
+          });
         });
-      });
-      let TypeArr = someTypes.map((x) => ({
-        list_id: newListId,
-        type_id: x.id,
-      }));
+        let TypeArr = someTypes.map((x) => ({
+          list_id: newListId,
+          type_id: x.id,
+        }));
 
-      await Users.updatePrefs(TypeArr, "type");
+        await Users.updatePrefs(TypeArr, "type");
+      }
     }
 
     const payload = await getListObject(newListId);
