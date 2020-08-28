@@ -110,7 +110,9 @@ request data:
 {
   "username": "Name",
   "email": "username@email.com",
-  "password": "password"
+  "password": "password",
+  "zipcode": "90210",
+  "birthDate": "07/07/1977"
 }
 ```
 
