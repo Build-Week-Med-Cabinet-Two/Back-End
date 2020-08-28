@@ -112,7 +112,7 @@ request data:
   "email": "username@email.com",
   "password": "password",
   "zipcode": "90210",
-  "birthDate": 
+  "birthDate": "07/07/1977"
 }
 ```
 
