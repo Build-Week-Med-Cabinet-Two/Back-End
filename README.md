@@ -259,9 +259,8 @@ request data:
 ```json
 {
   "listName": "Sleepy",
-
-  "intakes": ["Earthy", "Coffee"],
-  "types": ["Happy", "Relaxed"],
+  "intakes": ["Smoke", "Vape"],
+  "types": ["Hybrid"],
   "issues": "optional user inputed issue(s)",
   "strain": "optional user inputed strain(s)",
   "effect": "optional user inputed effect(s)",
@@ -314,21 +313,12 @@ request data:
 {
   "oldListName": "Sleepy",
   "listName": "SleepyOne",
-
-  "intakes": ["Apple", "Coffee"],
-  "types": ["Happy", "Uplifted"],
+  "intakes": ["Smoke", "Vape"],
+  "types": ["Indica"],
   "issues": "optional user inputed issue(s)",
   "strain": "optional user inputed strain(s)",
   "effect": "optional user inputed effect(s)",
   "flavor": "optional user inputed flavor(s)"
-
-  "flavors": ["Apple", "Coffee"],
-  "effects": ["Happy", "Uplifted"],
-   "issues": "optional user inputed issue(s)",
-  "strain": "optional user inputed strain(s)",
-  "type": "optional user inputed type(s)",
-  "intake": "optional user inputed intake(s)"
-
 }
 ```
 
