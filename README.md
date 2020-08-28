@@ -20,7 +20,6 @@
 | id     | integer | _primary key_ and _autoincrements_ |
 | intake | string  | _required_ and _unique_            |
 
-
 AVAILABLE INTAKES:
 "Vape",
 "Edible",
@@ -28,7 +27,6 @@ AVAILABLE INTAKES:
 "Topical"
 
 #### Types
-
 
 | Field | Effect  | Notes                              |
 | ----- | ------- | ---------------------------------- |
@@ -225,7 +223,6 @@ response data:
 
 ```json
 {
-
   "results": [
     {
       "Description": "Purple Cream has been a favorite of anxiety sufferers for over a decade. Great for nighttime use, this indica is mellow and calming. Purple Cream produces a moderate body-heavy sensation, relaxing your muscles and easing stress. The effects of this strain are quite sedative and can last around two hours. Like other purples, Purple Cream’s aroma is sweet, floral, and earthy.",
@@ -252,7 +249,6 @@ response data:
       "Type": "hybrid"
     }
   ]
-
 }
 ```
 
@@ -270,7 +266,6 @@ request data:
   "strain": "optional user inputed strain(s)",
   "effect": "optional user inputed effect(s)",
   "flavor": "optional user inputed flavor(s)"
-
 }
 ```
 
@@ -279,35 +274,36 @@ response data:
 ```json
 [
   {
-  "message": " user just CREATED list: Sleepy",
+    "message": " user just CREATED list: Sleepy",
     "results": [
-        {
-            "Description": "Purple Cream has been a favorite of anxiety sufferers for over a decade. Great for nighttime use, this indica is mellow and calming. Purple Cream produces a moderate body-heavy sensation, relaxing your muscles and easing stress. The effects of this strain are quite sedative and can last around two hours. Like other purples, Purple Cream’s aroma is sweet, floral, and earthy.",
-            "Effects": "Happy,Relaxed,Sleepy,Hungry,Giggly",
-            "Flavor": "Sweet,Pine,Earthy",
-            "Rating": 4.3,
-            "Strain": "Purple-Cream",
-            "Type": "indica"
-        },
-        {
-            "Description": "Cornbread by Rare Dankness is an 80/20 indica-dominant hybrid strain that crosses Katsu Bubba Kush and Rare Dankness #2. Its aroma is a sweet mix of lemons and incense, and like a perfect appetizer, Cornbread is all you’ll need to invite the appetite before dinner. With heavy, tranquilizing effects that relax the body, Cornbread also makes a great nightcap as you transition into sleep.",
-            "Effects": "Relaxed,Euphoric,Hungry,Happy,Sleepy",
-            "Flavor": "Lemon,Citrus,Woody",
-            "Rating": 4.6,
-            "Strain": "Cornbread",
-            "Type": "indica"
-        },
-        {
-            "Description": "Harry Potter is an otherworldly hybrid strain that crosses Blissful Wizard with Fire Alien Kush. Bred by Sasquatch Gardens in California, Harry Potter casts a pacifying spell over the body, easing aches and pains while hushing anxiety. ",
-            "Effects": "Relaxed,Happy,Uplifted,Creative,Giggly",
-            "Flavor": "Sweet,Citrus,Lemon",
-            "Rating": 4.8,
-            "Strain": "Harry-Potter",
-            "Type": "hybrid"
-        }
-
+      {
+        "Description": "Purple Cream has been a favorite of anxiety sufferers for over a decade. Great for nighttime use, this indica is mellow and calming. Purple Cream produces a moderate body-heavy sensation, relaxing your muscles and easing stress. The effects of this strain are quite sedative and can last around two hours. Like other purples, Purple Cream’s aroma is sweet, floral, and earthy.",
+        "Effects": "Happy,Relaxed,Sleepy,Hungry,Giggly",
+        "Flavor": "Sweet,Pine,Earthy",
+        "Rating": 4.3,
+        "Strain": "Purple-Cream",
+        "Type": "indica"
+      },
+      {
+        "Description": "Cornbread by Rare Dankness is an 80/20 indica-dominant hybrid strain that crosses Katsu Bubba Kush and Rare Dankness #2. Its aroma is a sweet mix of lemons and incense, and like a perfect appetizer, Cornbread is all you’ll need to invite the appetite before dinner. With heavy, tranquilizing effects that relax the body, Cornbread also makes a great nightcap as you transition into sleep.",
+        "Effects": "Relaxed,Euphoric,Hungry,Happy,Sleepy",
+        "Flavor": "Lemon,Citrus,Woody",
+        "Rating": 4.6,
+        "Strain": "Cornbread",
+        "Type": "indica"
+      },
+      {
+        "Description": "Harry Potter is an otherworldly hybrid strain that crosses Blissful Wizard with Fire Alien Kush. Bred by Sasquatch Gardens in California, Harry Potter casts a pacifying spell over the body, easing aches and pains while hushing anxiety. ",
+        "Effects": "Relaxed,Happy,Uplifted,Creative,Giggly",
+        "Flavor": "Sweet,Citrus,Lemon",
+        "Rating": 4.8,
+        "Strain": "Harry-Potter",
+        "Type": "hybrid"
+      }
     ]
-
+  }
+]
+```
 
 #### PUT /users/update-list
 
